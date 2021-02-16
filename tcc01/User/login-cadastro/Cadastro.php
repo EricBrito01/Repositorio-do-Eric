@@ -355,9 +355,9 @@ $verificar = rand(1000, 9000);
 
                     <input class="fadeIn second" type="text" name="txtnome" placeholder="Nome">
                     <br>
-                    <input class="fadeIn third" type="text" name="txtcpf" Placeholder="CPF (Apenas Números) ">
+                    <input class="fadeIn third" type="text" name="txtcpf" Placeholder="CPF">
                     <br>
-                    <input class="fadeIn second" type="text" name="txttel" Placeholder=" Telefone (00)000000000">
+                    <input class="fadeIn second" type="text" name="txttel" Placeholder=" Telefone">
                     <br>
                     <input class="fadeIn third" type="text" name="txtendereco" Placeholder="Rua, Número da casa">
                     <br>
@@ -420,11 +420,11 @@ $verificar = rand(1000, 9000);
                                 echo "Falha no envio do email.";
                             }
                         } else {
-                ?>
+                            ?>
                             <br>
                             <div class="alert alert-danger" role="alert" id="alerta">Informações Invalídas !
                             </div>
-                        <?php
+                            <?php
                         }
                     } else {
                         ?>

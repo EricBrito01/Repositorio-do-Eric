@@ -2,16 +2,15 @@
 
 function validaCPF($cpf) {
  
-    // Extrai somente os números
-    $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
-     
+    // Extrair somente os números
+    $cpf = preg_replace("/[^0-9]/", "", $cpf);
+
     // Verifica se foi informado todos os digitos corretamente
     if (strlen($cpf) != 11) {
         return false;
     }
-
     // Verifica se foi informada uma sequência de digitos repetidos. Ex: 111.111.111-11
-    if (preg_match('/(\d)\1{10}/', $cpf)) {
+    if (preg_match("/(\d)\1{10}/", $cpf)) {
         return false;
     }
 
@@ -30,7 +29,8 @@ function validaCPF($cpf) {
 }
 function cadastrarCliente($conexao, $nome, $endereco, $email, $senha, $cpf, $bairro, $cidade, $tel, $complemento)
 {
-
+    $cpf = preg_replace("/[^0-9]/", "", $cpf);
+    
     $sql = "insert into tb_cliente(tb_cliente_nome,tb_cliente_endereco,tb_cliente_email,tb_cliente_senha,tb_cliente_cpf,tb_cliente_bairro,tb_cliente_cidade,tb_cliente_tel,tb_cliente_complemento)"
         . " values ('$nome','$endereco','$email','$senha',$cpf,'$bairro','$cidade','$tel','$complemento')";
 
@@ -159,3 +159,4 @@ function MudarSenha($conexao,$clienteid,$senha){
 
     return mysqli_query($conexao, $sql);
 }
+
