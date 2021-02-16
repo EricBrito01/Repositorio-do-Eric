@@ -8,17 +8,18 @@ if (empty($_SESSION['loginADM'])) {
 <html>
 
 <head>
+    
     <title>Cadastro de Fornecedor</title>
     <link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../css/stylesheets/locastyle.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8">
-   
+
 </head>
 
 <body>
     <div class="container">
         <?php
-        echo 'Bem vindo,' . $_SESSION['nome'] . ' ';
+         echo 'Bem vindo,' . $_SESSION['adm'] . ' ';
         ?>
         <a style="margin-left: 1%;" href="../Logout.php">Sair</a>
         <br><br>
@@ -34,7 +35,18 @@ if (empty($_SESSION['loginADM'])) {
         <ul>
             <li>Venda</li>
             <ul>
-                <li><a href="../Venda/Listar-vendas.php">Listar</a></li>
+                <li><a href="../Venda/Listar-vendas.php">Listar(<?php
+                                                                include("./../../conexao.php");
+                                                                include("../../banco/vendas-admin.php");
+
+                                                                echo ContarVendas($conexao);
+                                                                ?>)</a></li>
+            </ul>
+        </ul>
+        <ul>
+            <li>Cliente</li>
+            <ul>
+                <li><a href="../cliente/Listar-clientes.php">Listar</a></li>
             </ul>
         </ul>
         <ul>
@@ -95,7 +107,7 @@ if (empty($_SESSION['loginADM'])) {
             $bairro_fornecedor = $_POST['txtbairro'];
             $cidade_fornecedor = $_POST['txtcidade'];
             $email_fornecedor = $_POST['txtemail'];
-            
+
             if (valida_cnpj($cnpj_fornecedor)) {
                 if (cadastrarFornecedor($conexao, $nome_fornecedor, $cnpj_fornecedor, $endereco_fornecedor, $bairro_fornecedor, $cidade_fornecedor, $email_fornecedor, $tel_fornecedor)) {
 
@@ -107,17 +119,16 @@ if (empty($_SESSION['loginADM'])) {
                 } else {
                 ?>
                     <br>
-                    <div  class="alert alert-danger" role="alert" id="alerta">Informações Invalídas !
+                    <div class="alert alert-danger" role="alert" id="alerta">Informações Invalídas !
                     </div>
-        <?php
+                <?php
                 }
-            } 
-            else {
+            } else {
                 ?>
                 <br>
                 <div class="alert alert-danger" role="alert" id="alerta">CNPJ Invalído !
                 </div>
-    <?php
+        <?php
             }
         }
         ?>

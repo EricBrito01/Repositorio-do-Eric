@@ -8,6 +8,7 @@ include("../../conexao.php");
         <title>Login </title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <meta charset="utf-8"> 
+        
     </head>
     <body>
         <div class="container">
@@ -36,7 +37,7 @@ include("../../conexao.php");
                 {
                     session_start();
 
-                    $_SESSION ['nome'] = $nome;
+                    $_SESSION ['adm'] = $nome;
                     $_SESSION ['loginADM'] = 'logado';
                     header('location:../Painel.php');
                 }

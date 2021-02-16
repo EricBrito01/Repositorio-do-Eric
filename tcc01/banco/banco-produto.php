@@ -1,8 +1,9 @@
 <?php
 
-function cadastrarProduto($conexao, $produto_nome, $produto_qtd, $produto_preco, $fornecedor_id)
-{      
-    $sql = "Insert into tb_produto (tb_produto_nome, tb_produto_estoque, tb_produto_preco, tb_fornecedor_id) values ('$produto_nome', $produto_qtd, $produto_preco, $fornecedor_id)";
+
+function cadastrarProduto($conexao, $produto_nome, $produto_qtd, $produto_preco, $fornecedor_id, $imagens_prdt_id)
+{
+    $sql = "Insert into tb_produto (tb_produto_nome, tb_produto_estoque, tb_produto_preco, tb_fornecedor_id, tb_imagens_prdt_id) values ('$produto_nome', $produto_qtd, $produto_preco, $fornecedor_id, $imagens_prdt_id)";
 
     return mysqli_query($conexao, $sql);
 }
@@ -10,7 +11,9 @@ function cadastrarProduto($conexao, $produto_nome, $produto_qtd, $produto_preco,
 function listarProduto($conexao)
 {
 
-    $sql = "select *  from tb_produto inner join tb_fornecedor on tb_fornecedor.tb_fornecedor_id = tb_produto.tb_fornecedor_id order by tb_produto_id desc ";
+    $sql = "select *  from tb_produto inner join tb_fornecedor on tb_fornecedor.tb_fornecedor_id = tb_produto.tb_fornecedor_id 
+            inner join tb_imagens_prdt on tb_imagens_prdt.tb_imagens_prdt_id = tb_produto.tb_imagens_prdt_id
+            order by tb_produto_id desc; ";
 
     $lista = array();
 
@@ -22,12 +25,11 @@ function listarProduto($conexao)
     }
     return $lista;
 }
-
 function pesquisarProduto($conexao, $nome_produto)
 {
 
-    $sql = "select *  from tb_produto inner join tb_fornecedor
-on tb_fornecedor.tb_fornecedor_id = tb_produto.tb_fornecedor_id
+    $sql = "select *  from tb_produto inner join tb_fornecedor on tb_fornecedor.tb_fornecedor_id = tb_produto.tb_fornecedor_id 
+    inner join tb_imagens_prdt on tb_imagens_prdt.tb_imagens_prdt_id = tb_produto.tb_imagens_prdt_id
  where tb_produto_nome like  '%$nome_produto%'";
 
     $lista = array();
@@ -43,8 +45,9 @@ on tb_fornecedor.tb_fornecedor_id = tb_produto.tb_fornecedor_id
 function listaridProduto($conexao, $idproduto)
 {
     $sql = "select *  from tb_produto inner join tb_fornecedor 
-on tb_fornecedor.tb_fornecedor_id = tb_produto.tb_fornecedor_id 
-where tb_produto_id = $idproduto order by tb_produto_id desc";
+            on tb_fornecedor.tb_fornecedor_id = tb_produto.tb_fornecedor_id 
+            inner join tb_imagens_prdt on tb_imagens_prdt.tb_imagens_prdt_id = tb_produto.tb_imagens_prdt_id
+            where tb_produto_id = $idproduto order by tb_produto_id desc";
 
     $lista = array();
 
@@ -56,13 +59,14 @@ where tb_produto_id = $idproduto order by tb_produto_id desc";
     return $lista;
 }
 
-function alterarProduto($conexao, $produto_nome, $idproduto, $produto_qtd, $produto_preco, $fornecedor_id)
+function alterarProduto($conexao, $produto_nome, $idproduto, $produto_qtd, $produto_preco, $fornecedor_id, $imagens_prdt_id)
 {
     $sql = "update tb_produto set tb_produto_nome = '$produto_nome', tb_produto_estoque = $produto_qtd,
-            tb_produto_preco = $produto_preco, tb_fornecedor_id = $fornecedor_id where tb_produto_id = $idproduto";
+            tb_produto_preco = $produto_preco, tb_fornecedor_id = $fornecedor_id, tb_imagens_prdt_id= $imagens_prdt_id where tb_produto_id = $idproduto";
 
     return mysqli_query($conexao, $sql);
 }
+
 
 function excluirProduto($conexao, $produto_id)
 {
@@ -70,3 +74,36 @@ function excluirProduto($conexao, $produto_id)
     return mysqli_query($conexao, $sql);
 }
 
+function PesquisaDeProduto($conexao, $tabela, $pesquisa)
+{
+
+    $sql = "select * from  tb_produto inner join tb_fornecedor on tb_fornecedor.tb_fornecedor_id = tb_produto.tb_fornecedor_id where  $tabela like  '%$pesquisa%' ";
+
+    $lista = array();
+
+    $resultado = mysqli_query($conexao, $sql);
+
+    while ($produto = mysqli_fetch_assoc($resultado)) {
+
+        array_push($lista, $produto);
+    }
+    return $lista;
+}
+
+function listarProdutoAsc($conexao)
+{
+
+    $sql = "select *  from tb_produto inner join tb_fornecedor on tb_fornecedor.tb_fornecedor_id = tb_produto.tb_fornecedor_id 
+            inner join tb_imagens_prdt on tb_imagens_prdt.tb_imagens_prdt_id = tb_produto.tb_imagens_prdt_id
+            order by tb_produto_id asc; ";
+
+    $lista = array();
+
+    $resultado = mysqli_query($conexao, $sql);
+
+    while ($produto = mysqli_fetch_assoc($resultado)) {
+
+        array_push($lista, $produto);
+    }
+    return $lista;
+}

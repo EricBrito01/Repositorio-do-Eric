@@ -115,3 +115,18 @@ function valida_cnpj ( $cnpj ) {
         return true;
     }
 }
+
+function PesquisarFornecedor($conexao,$tabela,$pesquisa) {
+
+    $sql = "select * from tb_fornecedor where  $tabela like  '%$pesquisa%' " ;
+
+    $lista = array();
+
+    $resultado = mysqli_query($conexao, $sql);
+
+    while ($fornecedor = mysqli_fetch_assoc($resultado)) {
+
+        array_push($lista, $fornecedor);
+    }
+    return $lista;
+}
